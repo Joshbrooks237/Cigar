@@ -9,10 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" defer></script>
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-glow" aria-hidden="true"></div>
+  <canvas id="bg-particles" aria-hidden="true"></canvas>
 
   <header class="nav">
     <a href="#top" class="brand">
@@ -42,7 +44,7 @@
       </p>
 
       <div class="hero-number" aria-hidden="true">
-        <span>1</span><span>4</span><span>2</span><span>8</span><span>5</span><span>7</span>
+        <span data-digit="1">1</span><span data-digit="4">4</span><span data-digit="2">2</span><span data-digit="8">8</span><span data-digit="5">5</span><span data-digit="7">7</span>
       </div>
 
       <div class="hero-cta">
@@ -86,13 +88,7 @@
           Starts with <strong>1</strong> — the natural order.
         </p>
 
-        <div class="cycle-ring" aria-hidden="true">
-          <svg viewBox="-110 -110 220 220">
-            <circle cx="0" cy="0" r="80" class="ring-bg" />
-            <g id="ring-digits"></g>
-            <circle cx="0" cy="0" r="8" class="ring-center" />
-          </svg>
-        </div>
+        <div class="cycle-ring" id="cycle-ring" aria-hidden="true"></div>
       </div>
 
       <div class="all-products">
@@ -136,6 +132,13 @@
               <tr><td>6 / 7</td><td><code>0.<span class="cyc">857142</span>…</code></td><td><strong>8</strong></td></tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="why-card full cycle-diagram-card">
+          <h3>The full-reptend cycle, visualized</h3>
+          <p>Every nonzero remainder mod 7 — <strong>1, 3, 2, 6, 4, 5</strong> — appears exactly once before looping. Each arrow represents "<code>×10 mod 7</code>", and each arrow deposits one digit of <code>142857</code> along the way.</p>
+          <div class="cycle-diagram" id="cycle-diagram"></div>
+          <p class="hint">Hover an arrow to see the step. The digit it writes into the decimal is shown beside each arc.</p>
         </div>
 
         <div class="why-card full">
