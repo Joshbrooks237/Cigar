@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>142857 — The Cyclic Modulo 7 Trick</title>
+  <meta name="description" content="An interactive guide to 142857, the cyclic number hidden inside 1/7. Learn the trick, see why it works, and use it for fast mental math." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="brand">
+      <span class="brand-dot"></span>
+      <span>142857</span>
+    </a>
+    <nav>
+      <a href="#trick">The Trick</a>
+      <a href="#why">Why It Works</a>
+      <a href="#howto">How to Use It</a>
+      <a href="#divisible">Divisibility</a>
+      <a href="#facts">Fun Facts</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">The cyclic modulo&nbsp;7 trick</p>
+      <h1>
+        Meet <span class="gradient">142857</span>.<br />
+        The number that rotates when you multiply it.
+      </h1>
+      <p class="lede">
+        Multiply <code>142857</code> by 1, 2, 3, 4, 5, or 6 — and you always get the same six digits,
+        just shuffled into a new starting position. This is the <em>cyclic modulo 7 trick</em>, and
+        it's hiding in plain sight inside the fraction <code>1/7</code>.
+      </p>
+
+      <div class="hero-number" aria-hidden="true">
+        <span>1</span><span>4</span><span>2</span><span>8</span><span>5</span><span>7</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#trick" class="btn primary">See it in action</a>
+        <a href="#why" class="btn ghost">Show me why →</a>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 1: THE TRICK ==================== -->
+    <section id="trick" class="section">
+      <div class="section-head">
+        <span class="tag">01 — The trick</span>
+        <h2>Watch the digits rotate.</h2>
+        <p>Tap a multiplier. Notice how the result uses the exact same six digits — in the same order — starting from a different place.</p>
+      </div>
+
+      <div class="trick-card">
+        <div class="mult-buttons" role="tablist" aria-label="Multiplier">
+          <button class="mult-btn active" data-mult="1" role="tab" aria-selected="true">× 1</button>
+          <button class="mult-btn" data-mult="2" role="tab">× 2</button>
+          <button class="mult-btn" data-mult="3" role="tab">× 3</button>
+          <button class="mult-btn" data-mult="4" role="tab">× 4</button>
+          <button class="mult-btn" data-mult="5" role="tab">× 5</button>
+          <button class="mult-btn" data-mult="6" role="tab">× 6</button>
+          <button class="mult-btn special" data-mult="7" role="tab">× 7 ?!</button>
+        </div>
+
+        <div class="equation">
+          <div class="eq-lhs">
+            <span class="eq-num">142857</span>
+            <span class="eq-op">×</span>
+            <span class="eq-mult" id="mult-display">1</span>
+          </div>
+          <span class="eq-equals">=</span>
+          <div class="eq-rhs" id="result-digits" aria-live="polite">
+            <span>1</span><span>4</span><span>2</span><span>8</span><span>5</span><span>7</span>
+          </div>
+        </div>
+
+        <p class="trick-note" id="trick-note">
+          Starts with <strong>1</strong> — the natural order.
+        </p>
+
+        <div class="cycle-ring" aria-hidden="true">
+          <svg viewBox="-110 -110 220 220">
+            <circle cx="0" cy="0" r="80" class="ring-bg" />
+            <g id="ring-digits"></g>
+            <circle cx="0" cy="0" r="8" class="ring-center" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="all-products">
+        <div class="product-row" data-mult="1"><span>142857 × 1</span><code>142857</code></div>
+        <div class="product-row" data-mult="2"><span>142857 × 2</span><code>285714</code></div>
+        <div class="product-row" data-mult="3"><span>142857 × 3</span><code>428571</code></div>
+        <div class="product-row" data-mult="4"><span>142857 × 4</span><code>571428</code></div>
+        <div class="product-row" data-mult="5"><span>142857 × 5</span><code>714285</code></div>
+        <div class="product-row" data-mult="6"><span>142857 × 6</span><code>857142</code></div>
+        <div class="product-row highlight" data-mult="7"><span>142857 × 7</span><code>999999</code></div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2: WHY IT WORKS ==================== -->
+    <section id="why" class="section">
+      <div class="section-head">
+        <span class="tag">02 — Why it works</span>
+        <h2>It's <code>1/7</code> in disguise.</h2>
+        <p>The decimal expansion of <code>1/7</code> is a repeating block of six digits. That block is <strong>142857</strong>.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <h3>Long division of 1 ÷ 7</h3>
+          <p>Watch the remainders as we divide. Each remainder is the <em>next numerator</em>, and each remainder corresponds to a different sevenths fraction.</p>
+          <div class="division-board" id="division-board"></div>
+          <p class="hint">The remainders cycle through <code>1 → 3 → 2 → 6 → 4 → 5 → 1 → …</code> — every nonzero number mod&nbsp;7 appears exactly once before repeating. That's why 7 is a <strong>full-reptend prime</strong>.</p>
+        </div>
+
+        <div class="why-card">
+          <h3>Every seventh is a rotation</h3>
+          <p>Because the remainders come back around, each <code>k/7</code> has the same six digits — just starting at a different point in the cycle.</p>
+          <table class="sevenths">
+            <thead><tr><th>Fraction</th><th>Decimal</th><th>Starts at</th></tr></thead>
+            <tbody>
+              <tr><td>1 / 7</td><td><code>0.<span class="cyc">142857</span>…</code></td><td><strong>1</strong></td></tr>
+              <tr><td>2 / 7</td><td><code>0.<span class="cyc">285714</span>…</code></td><td><strong>2</strong></td></tr>
+              <tr><td>3 / 7</td><td><code>0.<span class="cyc">428571</span>…</code></td><td><strong>4</strong></td></tr>
+              <tr><td>4 / 7</td><td><code>0.<span class="cyc">571428</span>…</code></td><td><strong>5</strong></td></tr>
+              <tr><td>5 / 7</td><td><code>0.<span class="cyc">714285</span>…</code></td><td><strong>7</strong></td></tr>
+              <tr><td>6 / 7</td><td><code>0.<span class="cyc">857142</span>…</code></td><td><strong>8</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="why-card full">
+          <h3>The one-line proof</h3>
+          <p>
+            Since <code>1/7 = 0.<span class="cyc">142857</span>…</code>, multiplying by 10<sup>6</sup> shifts the decimal by six places:
+          </p>
+          <div class="proof">
+            <code>10<sup>6</sup> / 7 &nbsp;=&nbsp; 142857.<span class="cyc">142857</span>…</code><br />
+            <code>10<sup>6</sup> / 7 &nbsp;−&nbsp; 1 / 7 &nbsp;=&nbsp; 142857</code><br />
+            <code>(10<sup>6</sup> − 1) / 7 &nbsp;=&nbsp; 999999 / 7 &nbsp;=&nbsp; 142857</code>
+          </div>
+          <p>So <code>142857 × 7 = 999999</code>. Multiplying 142857 by <em>k</em> (for <em>k</em> = 1…6) is the same as taking <code>k × (10⁶ − 1)/7</code>, which is why the result is always a cyclic permutation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: HOW TO USE IT ==================== -->
+    <section id="howto" class="section">
+      <div class="section-head">
+        <span class="tag">03 — How to use it</span>
+        <h2>Do sevenths in your head.</h2>
+        <p>Memorize one number — <strong>142857</strong> — and you can read off the decimal of any <code>k/7</code> instantly.</p>
+      </div>
+
+      <div class="howto-grid">
+        <div class="howto-card step">
+          <div class="step-num">1</div>
+          <h3>Memorize the cycle.</h3>
+          <p>Picture the six digits arranged in a ring:</p>
+          <p class="ringtxt"><code>1 → 4 → 2 → 8 → 5 → 7 → (back to 1)</code></p>
+          <p>Memory hook: <em>"14, 28, 57"</em> — doubling pattern. 14, then 28, then 57 (close to 2×28).</p>
+        </div>
+
+        <div class="howto-card step">
+          <div class="step-num">2</div>
+          <h3>Find your starting digit.</h3>
+          <p>For <code>k/7</code>, the decimal starts with the largest digit of 142857 that doesn't exceed <code>k × 1.4…</code>. Easier: just learn this tiny table.</p>
+          <table class="mini">
+            <tr><th>k</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+            <tr><td>starts at</td><td>1</td><td>2</td><td>4</td><td>5</td><td>7</td><td>8</td></tr>
+          </table>
+          <p class="hint">The starting digits <strong>1, 2, 4, 5, 7, 8</strong> are exactly 142857 sorted — easy to recall.</p>
+        </div>
+
+        <div class="howto-card step">
+          <div class="step-num">3</div>
+          <h3>Read six digits from the ring.</h3>
+          <p>Start at your digit and read six digits clockwise. Done.</p>
+        </div>
+
+        <div class="howto-card calculator">
+          <h3>Try it</h3>
+          <p>Type a numerator. We'll decode it with the trick.</p>
+          <div class="calc">
+            <div class="calc-input">
+              <input type="number" id="numerator" min="1" max="6" value="3" />
+              <span class="divide"> / 7 =</span>
+            </div>
+            <div class="calc-output" id="calc-output"></div>
+            <p class="calc-explain" id="calc-explain"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: DIVISIBILITY ==================== -->
+    <section id="divisible" class="section">
+      <div class="section-head">
+        <span class="tag">04 — Bonus</span>
+        <h2>Is it divisible by 7?</h2>
+        <p>A companion trick using mod 7. Chop off the last digit, double it, and subtract. Repeat. If the result is divisible by 7, so was the original.</p>
+      </div>
+
+      <div class="divis-card">
+        <div class="divis-input">
+          <label for="divis-num">Enter any whole number</label>
+          <input type="number" id="divis-num" value="1001" min="0" />
+          <button id="divis-go" class="btn primary">Check</button>
+        </div>
+        <div class="divis-steps" id="divis-steps"></div>
+        <p class="divis-result" id="divis-result"></p>
+        <details>
+          <summary>Why does this work?</summary>
+          <p>
+            If <code>N = 10a + b</code> (where <code>b</code> is the last digit), then
+            <code>N ≡ 0 (mod 7)</code> iff <code>10a + b ≡ 0 (mod 7)</code>.
+            Multiplying by 5 (which is invertible mod 7): <code>50a + 5b ≡ 0</code>, i.e. <code>a + 5b ≡ 0 (mod 7)</code>.
+            Subtract 7b from both sides: <code>a − 2b ≡ 0 (mod 7)</code>. So
+            <strong><code>N</code> is divisible by 7 iff <code>a − 2b</code> is.</strong>
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 5: FUN FACTS ==================== -->
+    <section id="facts" class="section">
+      <div class="section-head">
+        <span class="tag">05 — Fun facts</span>
+        <h2>Why mathematicians love 142857.</h2>
+      </div>
+
+      <div class="facts-grid">
+        <div class="fact">
+          <div class="fact-num">9 9 9 9 9 9</div>
+          <h3>It builds nines.</h3>
+          <p><code>142857 × 7 = 999999</code>. Any cyclic number of length <em>n</em> multiplied by its generator prime gives <em>n</em> nines.</p>
+        </div>
+        <div class="fact">
+          <div class="fact-num">142 + 857 = 999</div>
+          <h3>Split it in half — get 999.</h3>
+          <p>And <code>14 + 28 + 57 = 99</code>. And <code>1+4+2+8+5+7 = 27</code>, whose digits sum to <strong>9</strong>. Nines everywhere.</p>
+        </div>
+        <div class="fact">
+          <div class="fact-num">142857²</div>
+          <h3>Square it, split it, add it.</h3>
+          <p><code>142857² = 20408122449</code>. Split into <strong>20408</strong> and <strong>122449</strong>. Their sum? <code>142857</code>. It's called a <em>Kaprekar property</em>.</p>
+        </div>
+        <div class="fact">
+          <div class="fact-num">1/17, 1/19, 1/23…</div>
+          <h3>It has siblings.</h3>
+          <p>Any prime <em>p</em> where 10 is a <em>primitive root</em> mod <em>p</em> generates its own cyclic number. 7 is just the smallest — and prettiest — example.</p>
+        </div>
+        <div class="fact">
+          <div class="fact-num">× 8+ ?</div>
+          <h3>Beyond six: it splits and folds.</h3>
+          <p><code>142857 × 8 = 1142856</code>. The leading <strong>1</strong> wraps around and adds to the end: <code>142856 + 1 = 142857</code>. Cyclic magic survives even when it overflows.</p>
+        </div>
+        <div class="fact">
+          <div class="fact-num">1 / 7</div>
+          <h3>It all came from one fraction.</h3>
+          <p>Every pattern on this page is a consequence of this single fact: <code>10</code> has order <strong>6</strong> modulo <strong>7</strong>. Six digits. Six rotations. One beautiful number.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Made with reverence for <code>142857</code>.</p>
+      <p class="small">Keep a copy in your head. You'll impress someone at dinner.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
